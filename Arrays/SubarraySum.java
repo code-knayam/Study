@@ -1,17 +1,19 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class SubarraySum {
 
 	static void getSubarray(int[] arr, int sum, int n) {
-		int tempSum = 0, start = 0, end = 0, i = 0, j = 0;
+		int tempSum = 0, start = -1, end = -1, i = 0, j = 0;
 
 		while (i <= j && j < n) {
 			if (tempSum + arr[j] <= sum) {
 				tempSum += arr[j];
 
-				if (tempSum == sum && (end - start) < (j - i)) {
+				if (tempSum == sum) {
 					start = i;
 					end = j;
+					break;
 				}
 				j++;
 
@@ -20,14 +22,25 @@ public class SubarraySum {
 				i++;
 			}
 		}
-		System.out.println(start + " " + end);
+		if (start == -1 && end == -1) {
+			System.out.println(-1);
+		} else {
+			System.out.println((start + 1) + " " + (end + 1));
+		}
 	}
 
 	public static void main(String[] args) {
-		int[] arr = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-		int n = 10;
-		int sum = 15;
+		Scanner sc = new Scanner(System.in);
+		int x = sc.nextInt();
+		while (x-- > 0) {
+			int n = sc.nextInt();
+			int sum = sc.nextInt();
+			int[] arr = new int[n];
 
-		getSubarray(arr, sum, n);
+			for (int i = 0; i < n; i++)
+				arr[i] = sc.nextInt();
+
+			getSubarray(arr, sum, n);
+		}
 	}
 }
